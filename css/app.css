@@ -1,0 +1,238 @@
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+
+@plugin "daisyui" {
+    themes: tailwind --default, tailwind-dark --prefersdark;
+}
+
+@custom-variant dark (&:where([data-theme="tailwind-dark"], [data-theme="tailwind-dark"] *));
+
+/* ============================================================
+   TEMA CLARO
+   ============================================================ */
+@plugin "daisyui/theme" {
+    name: "tailwind";
+    default: true;
+    color-scheme: light;
+
+    /* Base */
+    --color-base-100: oklch(1 0 0);
+    --color-base-200: oklch(0.985 0.002 247.839);
+    --color-base-300: oklch(0.967 0.003 264.542);
+    --color-base-content: oklch(0.141 0.005 285.823);
+
+    /* Primary — Blue-500 */
+    --color-primary: oklch(0.623 0.214 259.815);
+    --color-primary-content: oklch(1 0 0);
+
+    /* Secondary — Violet-500 */
+    --color-secondary: #93A2B6;
+    --color-secondary-content: oklch(1 0 0);
+
+    /* Accent — Fuchsia-500 */
+    --color-accent: oklch(0.66 0.23 310.9);
+    --color-accent-content: oklch(1 0 0);
+
+    /* Neutral — Zinc-700 */
+    --color-neutral: oklch(0.37 0.013 285.805);
+    --color-neutral-content: oklch(0.985 0.002 247.839);
+
+    /* Info — Sky-500 */
+    --color-info: oklch(0.685 0.169 237.323);
+    --color-info-content: oklch(1 0 0);
+
+    /* Success — Green-500 */
+    --color-success: oklch(0.696 0.17 162.48);
+    --color-success-content: oklch(1 0 0);
+
+    /* Warning — Amber-500 */
+    --color-warning: oklch(0.75 0.2 59.64);
+    --color-warning-content: oklch(1 0 0);
+
+    /* Error — Red-500 */
+    --color-error: oklch(0.637 0.237 25.331);
+    --color-error-content: oklch(1 0 0);
+
+    --radius-selector: 0.375rem;
+    --radius-field: 0.375rem;
+    --radius-box: 0.5rem;
+    --border: 0px;
+}
+
+/* ============================================================
+   TEMA OSCURO
+   ============================================================ */
+@plugin "daisyui/theme" {
+    name: "tailwind-dark";
+    prefersdark: true;
+    color-scheme: dark;
+
+    /* Base */
+    --color-base-100: oklch(0.141 0.005 285.823);
+    --color-base-200: oklch(0.21 0.006 285.885);
+    --color-base-300: oklch(0.274 0.006 286.033);
+    --color-base-content: oklch(0.985 0.002 247.839);
+
+    /* Primary — Blue-600 */
+    --color-primary: oklch(0.546 0.245 262.881);
+    --color-primary-content: oklch(1 0 0);
+
+    /* Secondary — Violet-600 */
+    --color-secondary: #6B7B90;
+    --color-secondary-content: oklch(1 0 0);
+
+    /* Accent — Fuchsia-600 */
+    --color-accent: oklch(0.55 0.24 309.17);
+    --color-accent-content: oklch(1 0 0);
+
+    /* Neutral — intercambiado */
+    --color-neutral: oklch(0.985 0.002 247.839);
+    --color-neutral-content: oklch(0.274 0.006 286.033);
+
+    /* Info — Sky-600 */
+    --color-info: oklch(0.588 0.158 241.966);
+    --color-info-content: oklch(1 0 0);
+
+    /* Success — Green-600 */
+    --color-success: oklch(0.59 0.14 162.57);
+    --color-success-content: oklch(1 0 0);
+
+    /* Warning — Amber-600 */
+    --color-warning: oklch(0.666 0.179 58.318);
+    --color-warning-content: oklch(1 0 0);
+
+    /* Error — Red-600 */
+    --color-error: oklch(0.71 0.21 22.42);
+    --color-error-content: oklch(1 0 0);
+
+    --radius-selector: 0.375rem;
+    --radius-field: 0.375rem;
+    --radius-box: 0.5rem;
+    --border: 0px;
+}
+
+/*
+  El color predeterminado del borde ha cambiado a `currentcolor` en Tailwind CSS v4,
+  por lo que hemos añadido estos estilos de compatibilidad para asegurarnos de que todo siga
+  teniendo el mismo aspecto que en Tailwind CSS v3.
+
+  Si alguna vez queremos eliminar estos estilos, tendremos que añadir una utilidad de color de borde
+  explícita a cualquier elemento que dependa de estos valores predeterminados.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@layer components {
+
+    /* ===== ALERTAS ===== */
+
+        /* Variables para el Modo Claro */
+        [data-theme="tailwind"], [data-theme="light"], :root {
+            --tui-warn-bg: oklch(98.7% .026 102.212);
+            --tui-warn-text: oklch(47.6% .114 61.907);
+            --tui-warn-icon: oklch(85.2% .199 91.936);
+
+            --tui-error-bg: oklch(97.1% .013 17.38);
+            --tui-error-text: oklch(44.4% .177 26.899);
+            --tui-error-icon: oklch(70.4% .191 22.216);
+
+            --tui-success-bg: oklch(98.2% .018 155.826);
+            --tui-success-text: oklch(44.8% .119 151.328);
+            --tui-success-icon: oklch(79.2% .209 151.711);
+
+            --tui-info-bg: oklch(97% .014 254.604);
+            --tui-info-text: oklch(48.8% .243 264.376);
+            --tui-info-icon: oklch(70.7% .165 254.624);
+        }
+
+        /* Variables para el Modo Oscuro */
+        [data-theme="tailwind-dark"] {
+            --tui-warn-out: oklab(79.5% .0126846 .183562 / .15);
+            --tui-warn-bg: oklab(79.5% .0126846 .183562 / .1);
+            --tui-warn-text: oklch(97.3% .071 103.193);
+            --tui-warn-icon: oklch(90.5% .182 98.111);
+
+            --tui-error-out: oklab(63.7% .214213 .1014 / .25);
+            --tui-error-bg: oklab(63.7% .214213 .1014 / .15);
+            --tui-error-text: oklch(88.5% .062 18.334);
+            --tui-error-icon: oklch(70.4% .191 22.216);
+
+            --tui-success-out: oklab(72.3% -.18885 .110891 / .2);
+            --tui-success-bg: oklab(72.3% -.18885 .110891 / .1);
+            --tui-success-text: oklch(92.5% .084 155.995);
+            --tui-success-icon: oklch(79.2% .209 151.711);
+
+            --tui-info-out: oklab(62.3% -.0378409 -.210628 / .2);
+            --tui-info-bg: oklab(62.3% -.0378409 -.210628 / .1);
+            --tui-info-text: oklch(80.9% .105 251.813);
+            --tui-info-icon: oklch(70.7% .165 254.624);
+        }
+
+        /* 
+            Clases base que resetea DaisyUI
+        */
+        .tui-alert {
+            @apply flex flex-row items-start gap-3 p-4 rounded-md;
+            background-image: none !important;
+            box-shadow: none !important;
+            border: none !important;
+            display: flex !important;
+        }
+
+        .tui-alert.tui-warning { 
+            outline: 1px solid var(--tui-warn-out) !important;
+            background-color: var(--tui-warn-bg) !important; 
+            color: var(--tui-warn-text) !important; 
+        }
+        .tui-alert.tui-warning .tui-icon { 
+            color: var(--tui-warn-icon) !important; 
+        }
+
+        .tui-alert.tui-error { 
+            outline: 1px solid var(--tui-error-out) !important;
+            background-color: var(--tui-error-bg) !important; 
+            color: var(--tui-error-text) !important; 
+        }
+        .tui-alert.tui-error .tui-icon { 
+            color: var(--tui-error-icon) !important; 
+        }
+
+        .tui-alert.tui-success { 
+            outline: 1px solid var(--tui-success-out) !important;
+            background-color: var(--tui-success-bg) !important; 
+            color: var(--tui-success-text) !important; 
+        }
+        .tui-alert.tui-success .tui-icon { 
+            color: var(--tui-success-icon) !important; 
+        }
+
+        .tui-alert.tui-info { 
+            outline: 1px solid var(--tui-info-out) !important;
+            background-color: var(--tui-info-bg) !important; 
+            color: var(--tui-info-text) !important; 
+        }
+        .tui-alert.tui-info .tui-icon { 
+            color: var(--tui-info-icon) !important; 
+        }
+
+    /* =====  ===== */
+}
+
+/* Ocultar spin buttons nativos */
+.input[type="number"]::-webkit-inner-spin-button,
+.input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
