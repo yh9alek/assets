@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+@source '../../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../../storage/framework/views/*.php';
+@source '../../**/*.blade.php';
+@source '../../**/*.js';
+
 @plugin "daisyui" {
   themes:
     tailwind --default,
@@ -109,8 +114,6 @@
   --radius-box: 0.5rem;
   --border: 0px;
 }
-
-@source '../../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
 @custom-variant dark (&:where([data-theme="tailwind-dark"], [data-theme="tailwind-dark"] *));
 
