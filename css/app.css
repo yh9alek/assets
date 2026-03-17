@@ -1,113 +1,259 @@
 @import 'tailwindcss';
 
 @plugin "daisyui" {
-    themes: tailwind --default, tailwind-dark --prefersdark;
+  themes:
+    tailwind --default,
+    tailwind-dark --prefersdark;
 }
-
-@custom-variant dark (&:where([data-theme="tailwind-dark"], [data-theme="tailwind-dark"] *));
 
 /* ============================================================
    TEMA CLARO
    ============================================================ */
 @plugin "daisyui/theme" {
-    name: "tailwind";
-    default: true;
-    color-scheme: light;
+  name: 'tailwind';
+  default: true;
+  color-scheme: light;
 
-    /* Base */
-    --color-base-100: oklch(1 0 0);
-    --color-base-200: oklch(0.985 0.002 247.839);
-    --color-base-300: oklch(0.967 0.003 264.542);
-    --color-base-content: oklch(0.141 0.005 285.823);
+  /* Base */
+  --color-base-100: oklch(1 0 0);
+  --color-base-200: oklch(0.985 0.002 247.839);
+  --color-base-300: oklch(0.967 0.003 264.542);
+  --color-base-content: oklch(0.141 0.005 285.823);
 
-    /* Primary — Blue-500 */
-    --color-primary: oklch(0.623 0.214 259.815);
-    --color-primary-content: oklch(1 0 0);
+  /* Primary — Blue-500 */
+  --color-primary: oklch(0.623 0.214 259.815);
+  --color-primary-content: oklch(1 0 0);
 
-    /* Secondary — Violet-500 */
-    --color-secondary: #93A2B6;
-    --color-secondary-content: oklch(1 0 0);
+  /* Secondary — Violet-500 */
+  --color-secondary: #93a2b6;
+  --color-secondary-content: oklch(1 0 0);
 
-    /* Accent — Fuchsia-500 */
-    --color-accent: oklch(0.66 0.23 310.9);
-    --color-accent-content: oklch(1 0 0);
+  /* Accent — Fuchsia-500 */
+  --color-accent: oklch(0.66 0.23 310.9);
+  --color-accent-content: oklch(1 0 0);
 
-    /* Neutral — Zinc-700 */
-    --color-neutral: oklch(0.37 0.013 285.805);
-    --color-neutral-content: oklch(0.985 0.002 247.839);
+  /* Neutral — Zinc-700 */
+  --color-neutral: oklch(0.37 0.013 285.805);
+  --color-neutral-content: oklch(0.985 0.002 247.839);
 
-    /* Info — Sky-500 */
-    --color-info: oklch(0.685 0.169 237.323);
-    --color-info-content: oklch(1 0 0);
+  /* Info — Sky-500 */
+  --color-info: oklch(0.685 0.169 237.323);
+  --color-info-content: oklch(1 0 0);
 
-    /* Success — Green-500 */
-    --color-success: oklch(0.696 0.17 162.48);
-    --color-success-content: oklch(1 0 0);
+  /* Success — Green-500 */
+  --color-success: oklch(0.696 0.17 162.48);
+  --color-success-content: oklch(1 0 0);
 
-    /* Warning — Amber-500 */
-    --color-warning: oklch(0.75 0.2 59.64);
-    --color-warning-content: oklch(1 0 0);
+  /* Warning — Amber-500 */
+  --color-warning: oklch(0.75 0.2 59.64);
+  --color-warning-content: oklch(1 0 0);
 
-    /* Error — Red-500 */
-    --color-error: oklch(0.637 0.237 25.331);
-    --color-error-content: oklch(1 0 0);
+  /* Error — Red-500 */
+  --color-error: oklch(0.637 0.237 25.331);
+  --color-error-content: oklch(1 0 0);
 
-    --radius-selector: 0.375rem;
-    --radius-field: 0.375rem;
-    --radius-box: 0.5rem;
-    --border: 0px;
+  --radius-selector: 0.375rem;
+  --radius-field: 0.375rem;
+  --radius-box: 0.5rem;
+  --border: 0px;
 }
 
 /* ============================================================
    TEMA OSCURO
    ============================================================ */
 @plugin "daisyui/theme" {
-    name: "tailwind-dark";
-    prefersdark: true;
-    color-scheme: dark;
+  name: 'tailwind-dark';
+  prefersdark: true;
+  color-scheme: dark;
 
-    /* Base */
-    --color-base-100: oklch(0.141 0.005 285.823);
-    --color-base-200: oklch(0.21 0.006 285.885);
-    --color-base-300: oklch(0.274 0.006 286.033);
-    --color-base-content: oklch(0.985 0.002 247.839);
+  /* Base */
+  --color-base-100: oklch(0.141 0.005 285.823);
+  --color-base-200: oklch(0.21 0.006 285.885);
+  --color-base-300: oklch(0.274 0.006 286.033);
+  --color-base-content: oklch(0.985 0.002 247.839);
 
-    /* Primary — Blue-600 */
-    --color-primary: oklch(0.546 0.245 262.881);
-    --color-primary-content: oklch(1 0 0);
+  /* Primary — Blue-600 */
+  --color-primary: oklch(0.546 0.245 262.881);
+  --color-primary-content: oklch(1 0 0);
 
-    /* Secondary — Violet-600 */
-    --color-secondary: #6B7B90;
-    --color-secondary-content: oklch(1 0 0);
+  /* Secondary — Violet-600 */
+  --color-secondary: #6b7b90;
+  --color-secondary-content: oklch(1 0 0);
 
-    /* Accent — Fuchsia-600 */
-    --color-accent: oklch(0.55 0.24 309.17);
-    --color-accent-content: oklch(1 0 0);
+  /* Accent — Fuchsia-600 */
+  --color-accent: oklch(0.55 0.24 309.17);
+  --color-accent-content: oklch(1 0 0);
 
-    /* Neutral — intercambiado */
-    --color-neutral: oklch(0.985 0.002 247.839);
-    --color-neutral-content: oklch(0.274 0.006 286.033);
+  /* Neutral — intercambiado */
+  --color-neutral: oklch(0.985 0.002 247.839);
+  --color-neutral-content: oklch(0.274 0.006 286.033);
 
-    /* Info — Sky-600 */
-    --color-info: oklch(0.588 0.158 241.966);
-    --color-info-content: oklch(1 0 0);
+  /* Info — Sky-600 */
+  --color-info: oklch(0.588 0.158 241.966);
+  --color-info-content: oklch(1 0 0);
 
-    /* Success — Green-600 */
-    --color-success: oklch(0.59 0.14 162.57);
-    --color-success-content: oklch(1 0 0);
+  /* Success — Green-600 */
+  --color-success: oklch(0.59 0.14 162.57);
+  --color-success-content: oklch(1 0 0);
 
-    /* Warning — Amber-600 */
-    --color-warning: oklch(0.666 0.179 58.318);
-    --color-warning-content: oklch(1 0 0);
+  /* Warning — Amber-600 */
+  --color-warning: oklch(0.666 0.179 58.318);
+  --color-warning-content: oklch(1 0 0);
 
-    /* Error — Red-600 */
-    --color-error: oklch(0.71 0.21 22.42);
-    --color-error-content: oklch(1 0 0);
+  /* Error — Red-600 */
+  --color-error: oklch(0.71 0.21 22.42);
+  --color-error-content: oklch(1 0 0);
 
-    --radius-selector: 0.375rem;
-    --radius-field: 0.375rem;
-    --radius-box: 0.5rem;
-    --border: 0px;
+  --radius-selector: 0.375rem;
+  --radius-field: 0.375rem;
+  --radius-box: 0.5rem;
+  --border: 0px;
+}
+
+@source '../../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@custom-variant dark (&:where([data-theme="tailwind-dark"], [data-theme="tailwind-dark"] *));
+
+@theme {
+  --font-sans:
+    Figtree, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility tui-alert {
+  /* 
+            Clases base que resetea DaisyUI
+        */
+  @apply flex flex-row items-start gap-3 p-4 rounded-md;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  display: flex !important;
+
+  &.tui-warning {
+    outline: 1px solid var(--tui-warn-out) !important;
+    background-color: var(--tui-warn-bg) !important;
+    color: var(--tui-warn-text) !important;
+  }
+  &.tui-warning .tui-icon {
+    color: var(--tui-warn-icon) !important;
+  }
+
+  &.tui-error {
+    outline: 1px solid var(--tui-error-out) !important;
+    background-color: var(--tui-error-bg) !important;
+    color: var(--tui-error-text) !important;
+  }
+  &.tui-error .tui-icon {
+    color: var(--tui-error-icon) !important;
+  }
+
+  &.tui-success {
+    outline: 1px solid var(--tui-success-out) !important;
+    background-color: var(--tui-success-bg) !important;
+    color: var(--tui-success-text) !important;
+  }
+  &.tui-success .tui-icon {
+    color: var(--tui-success-icon) !important;
+  }
+
+  &.tui-info {
+    outline: 1px solid var(--tui-info-out) !important;
+    background-color: var(--tui-info-bg) !important;
+    color: var(--tui-info-text) !important;
+  }
+  &.tui-info .tui-icon {
+    color: var(--tui-info-icon) !important;
+  }
+
+  /* =====  ===== */
+}
+
+@utility tui-warning {
+  &.tui-alert {
+    outline: 1px solid var(--tui-warn-out) !important;
+    background-color: var(--tui-warn-bg) !important;
+    color: var(--tui-warn-text) !important;
+  }
+  &.tui-alert .tui-icon {
+    color: var(--tui-warn-icon) !important;
+  }
+
+  /* =====  ===== */
+}
+
+@utility tui-icon {
+  .tui-alert.tui-warning & {
+    color: var(--tui-warn-icon) !important;
+  }
+  .tui-alert.tui-error & {
+    color: var(--tui-error-icon) !important;
+  }
+  .tui-alert.tui-success & {
+    color: var(--tui-success-icon) !important;
+  }
+  .tui-alert.tui-info & {
+    color: var(--tui-info-icon) !important;
+  }
+
+  /* =====  ===== */
+}
+
+@utility tui-error {
+  &.tui-alert {
+    outline: 1px solid var(--tui-error-out) !important;
+    background-color: var(--tui-error-bg) !important;
+    color: var(--tui-error-text) !important;
+  }
+  &.tui-alert .tui-icon {
+    color: var(--tui-error-icon) !important;
+  }
+
+  /* =====  ===== */
+}
+
+@utility tui-success {
+  &.tui-alert {
+    outline: 1px solid var(--tui-success-out) !important;
+    background-color: var(--tui-success-bg) !important;
+    color: var(--tui-success-text) !important;
+  }
+  &.tui-alert .tui-icon {
+    color: var(--tui-success-icon) !important;
+  }
+
+  /* =====  ===== */
+}
+
+@utility tui-info {
+  &.tui-alert {
+    outline: 1px solid var(--tui-info-out) !important;
+    background-color: var(--tui-info-bg) !important;
+    color: var(--tui-info-text) !important;
+  }
+  &.tui-alert .tui-icon {
+    color: var(--tui-info-icon) !important;
+  }
+
+  /* =====  ===== */
 }
 
 /*
@@ -173,55 +319,6 @@
             --tui-info-text: oklch(80.9% .105 251.813);
             --tui-info-icon: oklch(70.7% .165 254.624);
         }
-
-        /* 
-            Clases base que resetea DaisyUI
-        */
-        .tui-alert {
-            @apply flex flex-row items-start gap-3 p-4 rounded-md;
-            background-image: none !important;
-            box-shadow: none !important;
-            border: none !important;
-            display: flex !important;
-        }
-
-        .tui-alert.tui-warning { 
-            outline: 1px solid var(--tui-warn-out) !important;
-            background-color: var(--tui-warn-bg) !important; 
-            color: var(--tui-warn-text) !important; 
-        }
-        .tui-alert.tui-warning .tui-icon { 
-            color: var(--tui-warn-icon) !important; 
-        }
-
-        .tui-alert.tui-error { 
-            outline: 1px solid var(--tui-error-out) !important;
-            background-color: var(--tui-error-bg) !important; 
-            color: var(--tui-error-text) !important; 
-        }
-        .tui-alert.tui-error .tui-icon { 
-            color: var(--tui-error-icon) !important; 
-        }
-
-        .tui-alert.tui-success { 
-            outline: 1px solid var(--tui-success-out) !important;
-            background-color: var(--tui-success-bg) !important; 
-            color: var(--tui-success-text) !important; 
-        }
-        .tui-alert.tui-success .tui-icon { 
-            color: var(--tui-success-icon) !important; 
-        }
-
-        .tui-alert.tui-info { 
-            outline: 1px solid var(--tui-info-out) !important;
-            background-color: var(--tui-info-bg) !important; 
-            color: var(--tui-info-text) !important; 
-        }
-        .tui-alert.tui-info .tui-icon { 
-            color: var(--tui-info-icon) !important; 
-        }
-
-    /* =====  ===== */
 }
 
 /* Ocultar spin buttons nativos */
