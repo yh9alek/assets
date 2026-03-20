@@ -6,7 +6,6 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-
 // Estado del tema actual
 document.addEventListener('DOMContentLoaded', () => {
 
