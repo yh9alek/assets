@@ -1,10 +1,11 @@
 import './bootstrap';
 
 import Alpine from 'alpinejs';
-
 window.Alpine = Alpine;
-
 Alpine.start();
+
+import { Grid } from './grid.js';
+window.Grid = Grid;
 
 // Estado del tema actual
 document.addEventListener('DOMContentLoaded', () => {

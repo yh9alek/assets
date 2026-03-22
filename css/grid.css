@@ -1,0 +1,269 @@
+/* =================================================================
+   GRID — Compatible con TailwindCSS v4 + DaisyUI
+   Usa CSS variables de DaisyUI en lugar de colores hardcodeados.
+   Temas: [data-theme="tailwind"] y [data-theme="tailwind-dark"]
+   ================================================================= */
+
+.grid-container {
+  position: relative;
+}
+
+.grid-t {
+  height: max-content;
+  overflow: visible !important;
+  font-size: 13px;
+  user-select: none;
+  margin-bottom: 80px;
+  color: var(--color-base-content);
+}
+
+.grid-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* ── Celdas ──────────────────────────────────────────────────── */
+
+.grid-t th,
+.grid-t td {
+  min-width: 120px;
+  height: 41px;
+  max-height: 41px;
+  text-transform: uppercase;
+  text-align: center !important;
+  /* text-align lo controla alignCells desde JS */
+}
+
+/* La columna de acciones solo ocupa lo necesario */
+.grid-t th:last-child,
+.grid-t td:last-child {
+  min-width: unset !important;
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* ── Cabecera ─────────────────────────────────────────────────── */
+
+/* Tema claro */
+[data-theme="tailwind"] .grid-t thead,
+[data-theme="tailwind"] .grid-t thead {
+  background-color: #F3F4F6; /* slate-200 aprox */
+}
+
+/* Tema oscuro */
+[data-theme="tailwind-dark"] .grid-t thead {
+  background-color: #18181B; /* base-200 dark */
+}
+
+.grid-t th {
+  border-bottom: 1px solid color-mix(in oklch, var(--color-base-content) 15%, transparent) !important;
+  border-right: 1px solid color-mix(in oklch, var(--color-base-content) 2%, transparent) !important;
+  color: var(--color-base-content);
+  font-weight: 600;
+}
+
+.grid-t th:last-child {
+  border-right: none !important;
+}
+
+/* ── Filas ────────────────────────────────────────────────────── */
+
+.grid-t td {
+  background-color: var(--color-base-100);
+  border-bottom: 1px solid color-mix(in oklch, var(--color-base-content) 10%, transparent) !important;
+  border-right: 1px solid color-mix(in oklch, var(--color-base-content) 2%, transparent) !important;
+}
+
+.grid-t td:last-child {
+  border-right: none !important;
+}
+
+.grid-t .alert {
+  font-size: 13px;
+}
+
+/* Zebra — filas pares */
+[data-theme="tailwind"] .grid-t tbody tr:nth-child(even) td {
+  background-color: #FDFDFD;
+}
+
+[data-theme="tailwind-dark"] .grid-t tbody tr:nth-child(even) td {
+  background-color: #0B0B0D;
+}
+
+/* ── Buscador ─────────────────────────────────────────────────── */
+
+.search-container input {
+  background-color: var(--color-base-100);
+  color: var(--color-base-content);
+  border-radius: var(--radius-field);
+  transition: border-color 0.15s ease;
+}
+
+/* Borde según tema */
+[data-theme="tailwind"] .search-container input {
+  border: 1px solid oklch(0.872 0.01 258.338) !important;
+}
+
+[data-theme="tailwind-dark"] .search-container input {
+  border: 1px solid oklch(0.274 0.006 286.033) !important;
+}
+
+.search-container input:focus {
+  border-color: var(--color-primary) !important;
+  outline: none;
+}
+
+.search-container input::placeholder {
+  color: var(--color-base-content);
+  opacity: 0.4;
+}
+
+/* ── Botones de acción (columna acciones) ─────────────────────── */
+
+.grid-button {
+  border: none;
+  outline: none;
+  padding: 5px;
+  border-radius: var(--radius-selector);
+  color: var(--color-base-content);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.grid-button:hover {
+  background-color: var(--color-base-300);
+}
+
+/* ── Wrapper automático de acciones (generado por render) ─────── */
+
+.grid-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+/* ── Paginación ───────────────────────────────────────────────── */
+
+.paginacion {
+  bottom: -36px !important;
+}
+
+.registros {
+  bottom: -33px !important;
+  font-size: 13px;
+  color: var(--color-base-content);
+  opacity: 0.7;
+}
+
+.btn-p {
+  width: 30px;
+  height: 25px;
+  border: none;
+  outline: none;
+  border-radius: var(--radius-selector);
+  background-color: oklch(0.623 0.214 259.815);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background-color 0.15s ease;
+}
+
+/* Color según tema */
+[data-theme="tailwind-dark"] .btn-p {
+  background-color: oklch(0.546 0.245 262.881) !important;
+}
+
+[data-theme="tailwind"] .btn-p:disabled {
+  background-color: #ffffff0e !important;
+  opacity: 0.4;
+  cursor: not-allowed;
+
+  & > span {
+    color: #101113 !important;
+  }
+}
+
+[data-theme="tailwind-dark"] .btn-p:disabled {
+  background-color: #ffffff0e !important;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* .btn-p:disabled {
+  background-color: var(--color-base-300) !important;
+  color: var(--color-base-content) !important;
+  opacity: 0.4;
+  cursor: not-allowed;
+} */
+
+/* ── Botón limpiar búsqueda ───────────────────────────────────── */
+
+.btn-clear {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-error);
+  padding: 0;
+  line-height: 1;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-base-300);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-secondary);
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+
+@media (width <= 560px) {
+  .registros {
+    width: 100%;
+    bottom: -64px !important;
+    text-align: center;
+  }
+
+  .paginacion {
+    width: 100%;
+    justify-content: center !important;
+    bottom: -36px !important;
+  }
+
+  .grid-header-actions {
+    flex-direction: column;
+    align-items: start !important;
+    row-gap: 10px;
+  }
+
+  .grid-header-actions > *,
+  .grid-header-actions .search-container input {
+    width: 100% !important;
+  }
+
+  .grid-t th,
+  .grid-t td,
+  .grid-t .alert {
+    font-size: 11px;
+  }
+  .grid-t .alert {
+    padding: 1px 10px;
+  }
+}

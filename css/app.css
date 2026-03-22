@@ -1,3 +1,5 @@
+@import './grid.css';
+
 @import 'tailwindcss';
 @import  'material-symbols' ;
 
@@ -62,6 +64,8 @@
   --radius-field: 0.375rem;
   --radius-box: 0.5rem;
   --border: 0px;
+
+  --alert-color: currentColor;
 }
 
 /* ============================================================
@@ -114,6 +118,8 @@
   --radius-field: 0.375rem;
   --radius-box: 0.5rem;
   --border: 0px;
+
+  --alert-color: currentColor;
 }
 
 @custom-variant dark (&:where([data-theme="tailwind-dark"], [data-theme="tailwind-dark"] *));
@@ -144,124 +150,6 @@
   }
 }
 
-@utility tui-alert {
-  /* 
-            Clases base que resetea DaisyUI
-        */
-  @apply flex flex-row items-start gap-3 p-4 rounded-md;
-  background-image: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  display: flex !important;
-
-  &.tui-warning {
-    outline: 1px solid var(--tui-warn-out) !important;
-    background-color: var(--tui-warn-bg) !important;
-    color: var(--tui-warn-text) !important;
-  }
-  &.tui-warning .tui-icon {
-    color: var(--tui-warn-icon) !important;
-  }
-
-  &.tui-error {
-    outline: 1px solid var(--tui-error-out) !important;
-    background-color: var(--tui-error-bg) !important;
-    color: var(--tui-error-text) !important;
-  }
-  &.tui-error .tui-icon {
-    color: var(--tui-error-icon) !important;
-  }
-
-  &.tui-success {
-    outline: 1px solid var(--tui-success-out) !important;
-    background-color: var(--tui-success-bg) !important;
-    color: var(--tui-success-text) !important;
-  }
-  &.tui-success .tui-icon {
-    color: var(--tui-success-icon) !important;
-  }
-
-  &.tui-info {
-    outline: 1px solid var(--tui-info-out) !important;
-    background-color: var(--tui-info-bg) !important;
-    color: var(--tui-info-text) !important;
-  }
-  &.tui-info .tui-icon {
-    color: var(--tui-info-icon) !important;
-  }
-
-  /* =====  ===== */
-}
-
-@utility tui-warning {
-  &.tui-alert {
-    outline: 1px solid var(--tui-warn-out) !important;
-    background-color: var(--tui-warn-bg) !important;
-    color: var(--tui-warn-text) !important;
-  }
-  &.tui-alert .tui-icon {
-    color: var(--tui-warn-icon) !important;
-  }
-
-  /* =====  ===== */
-}
-
-@utility tui-icon {
-  .tui-alert.tui-warning & {
-    color: var(--tui-warn-icon) !important;
-  }
-  .tui-alert.tui-error & {
-    color: var(--tui-error-icon) !important;
-  }
-  .tui-alert.tui-success & {
-    color: var(--tui-success-icon) !important;
-  }
-  .tui-alert.tui-info & {
-    color: var(--tui-info-icon) !important;
-  }
-
-  /* =====  ===== */
-}
-
-@utility tui-error {
-  &.tui-alert {
-    outline: 1px solid var(--tui-error-out) !important;
-    background-color: var(--tui-error-bg) !important;
-    color: var(--tui-error-text) !important;
-  }
-  &.tui-alert .tui-icon {
-    color: var(--tui-error-icon) !important;
-  }
-
-  /* =====  ===== */
-}
-
-@utility tui-success {
-  &.tui-alert {
-    outline: 1px solid var(--tui-success-out) !important;
-    background-color: var(--tui-success-bg) !important;
-    color: var(--tui-success-text) !important;
-  }
-  &.tui-alert .tui-icon {
-    color: var(--tui-success-icon) !important;
-  }
-
-  /* =====  ===== */
-}
-
-@utility tui-info {
-  &.tui-alert {
-    outline: 1px solid var(--tui-info-out) !important;
-    background-color: var(--tui-info-bg) !important;
-    color: var(--tui-info-text) !important;
-  }
-  &.tui-alert .tui-icon {
-    color: var(--tui-info-icon) !important;
-  }
-
-  /* =====  ===== */
-}
-
 /*
   El color predeterminado del borde ha cambiado a `currentcolor` en Tailwind CSS v4,
   por lo que hemos añadido estos estilos de compatibilidad para asegurarnos de que todo siga
@@ -280,55 +168,7 @@
   }
 }
 
-@layer components {
-
-    /* ===== ALERTAS ===== */
-
-        /* Variables para el Modo Claro */
-        [data-theme="tailwind"], [data-theme="light"], :root {
-            --tui-warn-bg: oklch(98.7% .026 102.212);
-            --tui-warn-text: oklch(47.6% .114 61.907);
-            --tui-warn-icon: oklch(85.2% .199 91.936);
-
-            --tui-error-bg: oklch(97.1% .013 17.38);
-            --tui-error-text: oklch(44.4% .177 26.899);
-            --tui-error-icon: oklch(70.4% .191 22.216);
-
-            --tui-success-bg: oklch(98.2% .018 155.826);
-            --tui-success-text: oklch(44.8% .119 151.328);
-            --tui-success-icon: oklch(79.2% .209 151.711);
-
-            --tui-info-bg: oklch(97% .014 254.604);
-            --tui-info-text: oklch(48.8% .243 264.376);
-            --tui-info-icon: oklch(70.7% .165 254.624);
-        }
-
-        /* Variables para el Modo Oscuro */
-        [data-theme="tailwind-dark"] {
-            --tui-warn-out: oklab(79.5% .0126846 .183562 / .15);
-            --tui-warn-bg: oklab(79.5% .0126846 .183562 / .1);
-            --tui-warn-text: oklch(97.3% .071 103.193);
-            --tui-warn-icon: oklch(90.5% .182 98.111);
-
-            --tui-error-out: oklab(63.7% .214213 .1014 / .25);
-            --tui-error-bg: oklab(63.7% .214213 .1014 / .15);
-            --tui-error-text: oklch(88.5% .062 18.334);
-            --tui-error-icon: oklch(70.4% .191 22.216);
-
-            --tui-success-out: oklab(72.3% -.18885 .110891 / .2);
-            --tui-success-bg: oklab(72.3% -.18885 .110891 / .1);
-            --tui-success-text: oklch(92.5% .084 155.995);
-            --tui-success-icon: oklch(79.2% .209 151.711);
-
-            --tui-info-out: oklab(62.3% -.0378409 -.210628 / .2);
-            --tui-info-bg: oklab(62.3% -.0378409 -.210628 / .1);
-            --tui-info-text: oklch(80.9% .105 251.813);
-            --tui-info-icon: oklch(70.7% .165 254.624);
-        }
-}
-
 @layer utilities {
-
   .no-scrollbar::-webkit-scrollbar {
       display: none !important;
       width: 0px !important;
@@ -339,6 +179,116 @@
       -ms-overflow-style: none !important;  /* IE y Edge */
       scrollbar-width: none !important;  /* Firefox */
   }
+}
+
+@layer utilities {
+
+  .alert {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+
+  /* ===== ALERTAS — Modo Claro ===== */
+  [data-theme="tailwind"] .alert-warning,
+  [data-theme="light"] .alert-warning,
+  :root .alert-warning {
+    background-color: oklch(98.7% .026 102.212) !important;
+    background-image: none !important;
+    background-size: unset !important;
+    outline: 1px solid oklch(85.2% .199 91.936 / .3) !important;
+    box-shadow: none !important;
+    color: oklch(47.6% .114 61.907) !important;
+
+    & .tui-icon { color: oklch(85.2% .199 91.936) !important; }
+  }
+
+  [data-theme="tailwind"] .alert-error,
+  [data-theme="light"] .alert-error,
+  :root .alert-error {
+    background-color: oklch(97.1% .013 17.38) !important;
+    background-image: none !important;
+    background-size: unset !important;
+    outline: 1px solid oklch(70.4% .191 22.216 / .3) !important;
+    box-shadow: none !important;
+    color: oklch(44.4% .177 26.899) !important;
+
+    & .tui-icon { color: oklch(70.4% .191 22.216) !important; }
+  }
+
+  [data-theme="tailwind"] .alert-success,
+  [data-theme="light"] .alert-success,
+  :root .alert-success {
+    background-color: oklch(98.2% .018 155.826) !important;
+    background-image: none !important;
+    background-size: unset !important;
+    outline: 1px solid oklch(79.2% .209 151.711 / .3) !important;
+    box-shadow: none !important;
+    color: oklch(44.8% .119 151.328) !important;
+
+    & .tui-icon { color: oklch(79.2% .209 151.711) !important; }
+  }
+
+  [data-theme="tailwind"] .alert-info,
+  [data-theme="light"] .alert-info,
+  :root .alert-info {
+    background-color: oklch(97% .014 254.604) !important;
+    background-image: none !important;
+    background-size: unset !important;
+    outline: 1px solid oklch(70.7% .165 254.624 / .3) !important;
+    box-shadow: none !important;
+    color: oklch(48.8% .243 264.376) !important;
+
+    & .tui-icon { color: oklch(70.7% .165 254.624) !important; }
+  }
+
+  /* ===== ALERTAS — Modo Oscuro ===== */
+  [data-theme="tailwind-dark"] .alert-warning {
+    background-color: oklab(79.5% .0126846 .183562 / .1) !important;
+    background-image: none !important;
+    background-size: unset !important;
+    outline: 1px solid oklab(79.5% .0126846 .183562 / .15) !important;
+    box-shadow: none !important;
+    color: oklch(97.3% .071 103.193) !important;
+
+    & .tui-icon { color: oklch(90.5% .182 98.111) !important; }
+  }
+
+  [data-theme="tailwind-dark"] .alert-error {
+    background-color: oklab(63.7% .214213 .1014 / .15) !important;
+    background-image: none !important;
+    background-size: unset !important;
+    outline: 1px solid oklab(63.7% .214213 .1014 / .25) !important;
+    box-shadow: none !important;
+    color: oklch(88.5% .062 18.334) !important;
+
+    & .tui-icon { color: oklch(70.4% .191 22.216) !important; }
+  }
+
+  [data-theme="tailwind-dark"] .alert-success {
+    background-color: oklab(72.3% -.18885 .110891 / .1) !important;
+    background-image: none !important;
+    background-size: unset !important;
+    outline: 1px solid oklab(72.3% -.18885 .110891 / .2) !important;
+    box-shadow: none !important;
+    color: oklch(92.5% .084 155.995) !important;
+
+    & .tui-icon { color: oklch(79.2% .209 151.711) !important; }
+  }
+
+  [data-theme="tailwind-dark"] .alert-info {
+    background-color: oklab(62.3% -.0378409 -.210628 / .1) !important;
+    background-image: none !important;
+    background-size: unset !important;
+    outline: 1px solid oklab(62.3% -.0378409 -.210628 / .2) !important;
+    box-shadow: none !important;
+    color: oklch(80.9% .105 251.813) !important;
+
+    & .tui-icon { color: oklch(70.7% .165 254.624) !important; }
+  }
+}
+
+@layer utilities {
 
   .material-symbols-rounded {
       opacity: 0;
