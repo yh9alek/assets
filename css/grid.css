@@ -29,7 +29,6 @@
   min-width: 120px;
   height: 41px;
   max-height: 41px;
-  text-transform: uppercase;
   text-align: center !important;
   /* text-align lo controla alignCells desde JS */
 }
@@ -73,14 +72,21 @@
   background-color: var(--color-base-100);
   border-bottom: 1px solid color-mix(in oklch, var(--color-base-content) 10%, transparent) !important;
   border-right: 1px solid color-mix(in oklch, var(--color-base-content) 2%, transparent) !important;
+
+  white-space: normal;
 }
 
+.grid-t th:last-child,
 .grid-t td:last-child {
-  border-right: none !important;
+  min-width: unset !important;
+  width: 1%;
+  white-space: nowrap !important; /* 👈 Muy importante mantenerlo */
+  text-align: center;
 }
 
 .grid-t .alert {
   font-size: 13px;
+  font-weight: 600;
 }
 
 /* Zebra — filas pares */
@@ -193,13 +199,6 @@
   cursor: not-allowed;
 }
 
-/* .btn-p:disabled {
-  background-color: var(--color-base-300) !important;
-  color: var(--color-base-content) !important;
-  opacity: 0.4;
-  cursor: not-allowed;
-} */
-
 /* ── Botón limpiar búsqueda ───────────────────────────────────── */
 
 .btn-clear {
@@ -264,6 +263,6 @@
     font-size: 11px;
   }
   .grid-t .alert {
-    padding: 1px 10px;
+    padding: 4px 12px;
   }
 }

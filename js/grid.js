@@ -669,7 +669,7 @@ export class Grid {
 
     _tableStyles() {
         return {
-            width:           '100%',
+             width:          'calc(100% - 1px)',
             borderCollapse:  'collapse',
             tableLayout:     'auto',
             marginTop:       '0',
