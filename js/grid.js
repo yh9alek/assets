@@ -52,7 +52,7 @@ export class Grid {
         this.padding         = options.padding        || '6px';
         this.searchPlaceholder = options.searchPlaceholder || 'Buscar...';
         this.alignCells      = options.alignCells     || 'left';
-        this.marginBottom    = options.marginBottom   || '100px';
+        this.marginBottom    = options.marginBottom   || '70px';
         this.searching       = options.searching !== false;
         this.pagination      = options.pagination !== false;
         this.headerButton    = options.headerButton   || null;
@@ -319,7 +319,7 @@ export class Grid {
             });
 
             const searchIcon = this._createEl('span', 'material-symbols-rounded', {
-                position: 'absolute', left: '10px', top: '9px',
+                position: 'absolute', left: '10px', top: '7px',
                 fontSize: '20px', color: '#888', pointerEvents: 'none',
             });
             searchIcon.textContent = 'search';
@@ -331,7 +331,7 @@ export class Grid {
             input.placeholder = this.searchPlaceholder;
 
             const clearBtn = this._createEl('button', 'btn-clear', {
-                position: 'absolute', right: '8px', top: '8px',
+                position: 'absolute', right: '8px', top: '7px',
                 border: 'none', background: 'none', display: 'none', color: '#DF6F58',
             });
             clearBtn.innerHTML = '<span class="material-symbols-rounded" style="font-size:20px;">close</span>';

@@ -1,11 +1,24 @@
 import './bootstrap';
 
 import Alpine from 'alpinejs';
+import { Grid } from './grid.js';
+import { Select } from './select.js';
+
 window.Alpine = Alpine;
 Alpine.start();
 
-import { Grid } from './grid.js';
 window.Grid = Grid;
+window.Select = Select;
+
+const saved = localStorage.getItem('sidebar_active_module');
+
+if (saved && saved !== 'home') {
+    const currentPath = window.location.pathname.replace(/^\//, '') || 'inicio';
+
+    if (window.location.pathname !== '/login' && currentPath !== saved) {
+        window.location.href = '/' + saved;
+    }
+}
 
 // Estado del tema actual
 document.addEventListener('DOMContentLoaded', () => {
