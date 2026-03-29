@@ -37,7 +37,7 @@ export class Select {
      * @param {string}   [config.placeholder]
      * @param {any[]}    [config.items]
      * @param {string}   [config.url]
-     * @param {string}   [config.dataPath]            — Ruta dentro de la respuesta JSON hasta el array
+     * @param {string}   [config.dataPath]             — Ruta dentro de la respuesta JSON hasta el array
      * @param {string}   [config.labelKey]             — Clave del label en cada objeto (default "label")
      * @param {string}   [config.valueKey]             — Clave del value en cada objeto (default "value")
      * @param {boolean}  [config.searchable]           — Muestra campo de búsqueda (default true)
@@ -101,9 +101,8 @@ export class Select {
         this._proxyNativeValue();
 
         // Mover required al nativo
-        if (this._container.hasAttribute('required')) {
+        if (config.required) {
             this._nativeSelect.required = true;
-            this._container.removeAttribute('required');
         }
 
         // Datos iniciales
@@ -116,6 +115,7 @@ export class Select {
         }
 
         Select.instances.push(this);
+        this._container._selectInstance = this;
     }
 
     // ── Renderizado ──────────────────────────────────────────────────────────
@@ -123,6 +123,8 @@ export class Select {
     _render() {
         this._container.innerHTML = '';
         this._container.classList.add('select-wrapper');
+
+         this._container.setAttribute('data-select-wrapper', '');
 
         // El trigger y el select nativo quedan dentro del container
         this._container.innerHTML = `
@@ -171,6 +173,8 @@ export class Select {
             this._nativeSelect.name = this._config.name;
             this._nativeSelect.id   = this._config.name;
         }
+
+        this._nativeSelect.setAttribute('data-native-select', '');
     }
 
     // ── Eventos ──────────────────────────────────────────────────────────────
@@ -654,11 +658,13 @@ export class Select {
         if (this._searchInp) this._searchInp.value = '';
         this._close();
 
+        this._renderOptions();
+
         this._isSyncing = true;
         this._nativeSelect.value = this._selected ? this._selected.value : '';
         this._isSyncing = false;
 
-        this._renderOptions();
+        this._nativeSelect.dispatchEvent(new Event('change', { bubbles: true }));
     }
 
     // ── API pública ──────────────────────────────────────────────────────────
@@ -702,6 +708,7 @@ export class Select {
         this._container.removeAttribute('data-has-selection');
 
         this._isSyncing = true;
+        this._nativeSelect.innerHTML = '';
         this._nativeSelect.value = '';
         this._isSyncing = false;
 
@@ -718,7 +725,6 @@ export class Select {
 
     markAsValid() {
         this._container.removeAttribute('data-invalid');
-        this._container.setAttribute('data-valid', '');
     }
 
     clearValidation() {

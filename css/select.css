@@ -211,8 +211,10 @@
 
 [data-invalid] .select-trigger {
     border-color: var(--color-error);
+    transition: border-color 0s;
 }
 
 [data-valid] .select-trigger {
     border-color: var(--color-success);
+    transition: border-color 0s;
 }

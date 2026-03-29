@@ -134,24 +134,6 @@
 }
 
 /*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
-}
-
-/*
   El color predeterminado del borde ha cambiado a `currentcolor` en Tailwind CSS v4,
   por lo que hemos añadido estos estilos de compatibilidad para asegurarnos de que todo siga
   teniendo el mismo aspecto que en Tailwind CSS v3.
@@ -181,7 +163,15 @@
   }
 
   .input:not(:focus) {
-    border-color: #D1D5DC !important;
+    border-color: #D1D5DC;
+  }
+
+  .color-base {
+    background-color: #406E9C;
+  }
+
+  [data-theme="tailwind-dark"] .color-base {
+    background-color: #13243D;
   }
 
   [data-theme="tailwind-dark"] .input:not(:focus) {

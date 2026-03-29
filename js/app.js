@@ -3,13 +3,16 @@ import './bootstrap';
 import Alpine from 'alpinejs';
 import { Grid } from './grid.js';
 import { Select } from './select.js';
+import { FormValidator } from './form-validator.js';
 
 window.Alpine = Alpine;
 Alpine.start();
 
 window.Grid = Grid;
 window.Select = Select;
+window.FormValidator = FormValidator;
 
+// Cargar último módulo consultado
 const saved = localStorage.getItem('sidebar_active_module');
 
 if (saved && saved !== 'home') {
@@ -71,4 +74,33 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Buscar todos los modales de la página
+    const modals = document.querySelectorAll('dialog');
+
+    modals.forEach(modal => {
+        modal.addEventListener('close', () => {
+            
+            // Buscar formularios dentro del modal, 
+            // ignorando el propio form de cierre nativo (<form method="dialog">)
+            const forms = modal.querySelectorAll('form:not([method="dialog"])');
+
+            forms.forEach(form => {
+                // 1. Resetea los valores de los inputs nativos
+                // Al hacer esto, el navegador dispara el evento 'reset', 
+                // el cual tu componente Select YA está escuchando para limpiarse solo.
+                form.reset();
+
+                // 2. Limpia los mensajes y bordes rojos de validación
+                if (form._formValidator) {
+                    form._formValidator.reset();
+                }
+            });
+            
+        });
+    });
+
 });
