@@ -1,0 +1,314 @@
+/* ============================================================
+   SWEETALERT2 — Custom Theme
+   Sincronizado con DaisyUI (tailwind / tailwind-dark)
+   ============================================================ */
+
+/* ──────────────────────────────────────────────
+   VARIABLES COMPARTIDAS (popup, botones, inputs)
+   ────────────────────────────────────────────── */
+:root {
+  /* Popup base */
+  --swal-bg:              oklch(1 0 0);
+  --swal-text:            oklch(0.141 0.005 285.823);
+  --swal-border:          oklch(0.967 0.003 264.542);
+  --swal-shadow:          0 8px 32px oklch(0 0 0 / .10);
+
+  /* Título y cuerpo */
+  --swal-title-color:     oklch(0.141 0.005 285.823);
+  --swal-body-color:      oklch(0.37 0.013 285.805);
+
+  /* Botón confirm — primary */
+  --swal-confirm-bg:      oklch(0.623 0.214 259.815);
+  --swal-confirm-text:    oklch(1 0 0);
+  --swal-confirm-hover:   oklch(0.546 0.245 262.881);
+
+  /* Botón cancel — neutral */
+  --swal-cancel-bg:       oklch(0.967 0.003 264.542);
+  --swal-cancel-text:     oklch(0.141 0.005 285.823);
+  --swal-cancel-hover:    oklch(0.940 0.004 264.0);
+
+  /* Botón deny — error */
+  --swal-deny-bg:         oklch(0.637 0.237 25.331);
+  --swal-deny-text:       oklch(1 0 0);
+  --swal-deny-hover:      oklch(0.56 0.22 25.0);
+
+  /* Input dentro del popup */
+  --swal-input-bg:        oklch(1 0 0);
+  --swal-input-border:    #D1D5DC;
+  --swal-input-focus-border: #86b7fe;
+  --swal-input-focus-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+
+  /* Íconos — usan los colores semánticos del tema */
+  --swal-icon-success:    oklch(0.696 0.17 162.48);
+  --swal-icon-error:      oklch(0.637 0.237 25.331);
+  --swal-icon-warning:    oklch(0.75 0.2 59.64);
+  --swal-icon-info:       oklch(0.685 0.169 237.323);
+  --swal-icon-question:   oklch(0.623 0.214 259.815);
+
+  /* Progress bar del timer */
+  --swal-timer-bar:       oklch(0.623 0.214 259.815);
+
+  /* Backdrop */
+  --swal-backdrop:        oklch(0 0 0 / .25);
+}
+
+/* ──────────────────────────────────────────────
+   TEMA OSCURO
+   ────────────────────────────────────────────── */
+[data-theme="tailwind-dark"] {
+  --swal-bg:              #09090B;
+  --swal-text:            oklch(0.985 0.002 247.839);
+  --swal-border:          oklch(27.394% 0.00551 285.955 / 0.527);
+  --swal-shadow:          0 8px 32px oklch(0 0 0 / .35);
+
+  --swal-title-color:     oklch(0.985 0.002 247.839);
+  --swal-body-color:      oklch(0.75 0.006 285.0);
+
+  --swal-confirm-bg:      oklch(0.546 0.245 262.881);
+  --swal-confirm-text:    oklch(1 0 0);
+  --swal-confirm-hover:   oklch(0.623 0.214 259.815);
+
+  --swal-cancel-bg:       oklch(0.274 0.006 286.033);
+  --swal-cancel-text:     oklch(0.985 0.002 247.839);
+  --swal-cancel-hover:    oklch(0.32 0.007 286.0);
+
+  --swal-deny-bg:         oklch(0.71 0.21 22.42);
+  --swal-deny-text:       oklch(1 0 0);
+  --swal-deny-hover:      oklch(0.637 0.237 25.331);
+
+  --swal-input-bg:        oklch(0.141 0.005 285.823);
+  --swal-input-border:    oklch(0.274 0.006 286.033);
+  --swal-input-focus-border: #86b7fe;
+  --swal-input-focus-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+
+  --swal-icon-success:    oklch(0.59 0.14 162.57);
+  --swal-icon-error:      oklch(0.71 0.21 22.42);
+  --swal-icon-warning:    oklch(0.666 0.179 58.318);
+  --swal-icon-info:       oklch(0.588 0.158 241.966);
+  --swal-icon-question:   oklch(0.546 0.245 262.881);
+
+  --swal-timer-bar:       oklch(0.546 0.245 262.881);
+  --swal-backdrop:        oklch(0 0 0 / .60);
+}
+
+/* ──────────────────────────────────────────────
+   POPUP — Contenedor principal
+   ────────────────────────────────────────────── */
+.swal2-popup {
+  background-color: var(--swal-bg) !important;
+  color: var(--swal-text) !important;
+  border: 1px solid var(--swal-border) !important;
+  border-radius: 0.5rem !important; /* --radius-box */
+  box-shadow: var(--swal-shadow) !important;
+  padding: 1.5rem !important;
+  font-family: Figtree, ui-sans-serif, system-ui, sans-serif !important;
+}
+
+.swal2-backdrop-show {
+  background: var(--swal-backdrop) !important;
+}
+
+/* ──────────────────────────────────────────────
+   TEXTOS
+   ────────────────────────────────────────────── */
+.swal2-title {
+  color: var(--swal-title-color) !important;
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+  padding: 0 !important;
+  margin: 0 0 10px !important;
+}
+
+.swal2-html-container,
+.swal2-content {
+  color: var(--swal-body-color) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ──────────────────────────────────────────────
+   BOTONES
+   ────────────────────────────────────────────── */
+.swal2-actions {
+  gap: 0.5rem !important;
+  margin-top: 1.25rem !important;
+}
+
+/* Base compartida — equivalente a .btn de DaisyUI */
+.swal2-confirm,
+.swal2-cancel,
+.swal2-deny {
+  min-width: 100px !important;
+  border: none !important;
+  border-radius: 0.375rem !important; /* --radius-field */
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  padding: 0 1rem !important;
+  height: 34.5px !important; /* --max-height del btn en tu utilidad */
+  line-height: 1 !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out !important;
+  box-shadow: none !important;
+}
+
+.swal2-confirm {
+  background-color: var(--swal-confirm-bg) !important;
+  color: var(--swal-confirm-text) !important;
+}
+.swal2-confirm:hover  { background-color: var(--swal-confirm-hover) !important; }
+.swal2-confirm:focus  { outline: none !important; box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25) !important; }
+
+.swal2-cancel {
+  background-color: var(--swal-cancel-bg) !important;
+  color: var(--swal-cancel-text) !important;
+}
+.swal2-cancel:hover   { background-color: var(--swal-cancel-hover) !important; }
+.swal2-cancel:focus   { outline: none !important; }
+
+.swal2-deny {
+  background-color: var(--swal-deny-bg) !important;
+  color: var(--swal-deny-text) !important;
+}
+.swal2-deny:hover     { background-color: var(--swal-deny-hover) !important; }
+.swal2-deny:focus     { outline: none !important; }
+
+/* ──────────────────────────────────────────────
+   INPUTS (prompt)
+   ────────────────────────────────────────────── */
+.swal2-input,
+.swal2-textarea,
+.swal2-select,
+.swal2-file {
+  background-color: var(--swal-input-bg) !important;
+  color: var(--swal-text) !important;
+  border: 1px solid var(--swal-input-border) !important;
+  border-radius: 0.375rem !important;
+  font-size: 0.875rem !important;
+  height: 34.5px !important;
+  padding: 0 0.75rem !important;
+  box-shadow: none !important;
+  transition: all .1s ease-in-out !important;
+}
+
+.swal2-textarea {
+  height: auto !important;
+  padding: 0.5rem 0.75rem !important;
+  resize: vertical !important;
+}
+
+.swal2-input:focus,
+.swal2-textarea:focus,
+.swal2-select:focus {
+  outline: none !important;
+  border-color: var(--swal-input-focus-border) !important;
+  box-shadow: var(--swal-input-focus-shadow) !important;
+}
+
+/* ──────────────────────────────────────────────
+   ÍCONOS — colores semánticos
+   ────────────────────────────────────────────── */
+@keyframes swal2-show-scaled {
+  0%   { transform: scale(0.6) scale(0.5); opacity: 0; }
+  100% { transform: scale(0.6) scale(1.1); opacity: 1; }
+}
+
+.swal2-icon {
+  margin-block: 0 !important;
+  animation: swal2-show-scaled 0.3s ease forwards !important;
+}
+
+.swal2-icon.swal2-success {
+  border-color: var(--swal-icon-success) !important;
+  color: var(--swal-icon-success) !important;
+}
+.swal2-icon.swal2-success .swal2-success-ring      { border-color: color-mix(in oklch, var(--swal-icon-success) 30%, transparent) !important; }
+.swal2-icon.swal2-success [class^="swal2-success-line"] { background-color: var(--swal-icon-success) !important; }
+
+.swal2-icon.swal2-error {
+  border-color: var(--swal-icon-error) !important;
+  color: var(--swal-icon-error) !important;
+}
+.swal2-icon.swal2-error .swal2-x-mark-line-left,
+.swal2-icon.swal2-error .swal2-x-mark-line-right   { background-color: var(--swal-icon-error) !important; }
+
+.swal2-icon.swal2-warning {
+  border-color: var(--swal-icon-warning) !important;
+  color: var(--swal-icon-warning) !important;
+}
+
+.swal2-icon.swal2-info {
+  border-color: var(--swal-icon-info) !important;
+  color: var(--swal-icon-info) !important;
+}
+
+.swal2-icon.swal2-question {
+  border-color: var(--swal-icon-question) !important;
+  color: var(--swal-icon-question) !important;
+}
+
+/* ──────────────────────────────────────────────
+   CLOSE BUTTON
+   ────────────────────────────────────────────── */
+.swal2-close {
+  color: var(--swal-body-color) !important;
+  font-size: 1.25rem !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  border-radius: 0.375rem !important;
+  transition: background-color 0.15s ease !important;
+}
+.swal2-close:hover {
+  background-color: var(--swal-border) !important;
+  color: var(--swal-title-color) !important;
+}
+.swal2-close:focus { outline: none !important; box-shadow: none !important; }
+
+/* ──────────────────────────────────────────────
+   TIMER PROGRESS BAR
+   ────────────────────────────────────────────── */
+.swal2-timer-progress-bar {
+  background-color: var(--swal-timer-bar) !important;
+  height: 3px !important;
+}
+
+/* ──────────────────────────────────────────────
+   TOAST
+   ────────────────────────────────────────────── */
+.swal2-toast {
+  padding: 0.625rem 1rem !important;
+  border-radius: 0.375rem !important;
+  box-shadow: var(--swal-shadow) !important;
+  background-color: var(--swal-bg) !important;
+  border: 1px solid var(--swal-border) !important;
+}
+
+.swal2-toast .swal2-title {
+  font-size: 0.875rem !important;
+  margin: 0 !important;
+}
+
+.swal2-toast .swal2-icon {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  margin: 0 0.5rem 0 0 !important;
+}
+
+/* ──────────────────────────────────────────────
+   VALIDATION MESSAGE
+   ────────────────────────────────────────────── */
+.swal2-validation-message {
+  background-color: oklch(97.1% .013 17.38) !important;
+  color: oklch(44.4% .177 26.899) !important;
+  border-radius: 0.375rem !important;
+  font-size: 0.8125rem !important;
+  margin-top: 0.5rem !important;
+  padding: 0.375rem 0.75rem !important;
+}
+
+[data-theme="tailwind-dark"] .swal2-validation-message {
+  background-color: oklab(63.7% .214213 .1014 / .15) !important;
+  color: oklch(88.5% .062 18.334) !important;
+}

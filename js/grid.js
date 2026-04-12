@@ -1,15 +1,3 @@
-/**
- * Grid - Vanilla JavaScript
- * Sin dependencias externas.
- *
- * Reemplazos realizados:
- *  - sweetalert2      → loader/modal nativos (métodos showLoader / closeLoader / showError)
- *  - httpGet / http-client → fetch nativo con manejo de errores propio
- *  - zod              → eliminado (sin validación de esquema)
- *  - authStore        → se acepta un token opcional vía options.token o función options.getToken()
- *  - mensajeError / mostrarLoader → implementaciones nativas internas
- */
-
 export class Grid {
 
     // ─────────────────────────────────────────────
@@ -57,11 +45,6 @@ export class Grid {
         this.pagination      = options.pagination !== false;
         this.headerButton    = options.headerButton   || null;
 
-        // Token de autenticación: puede ser string fijo o función que lo devuelve
-        this._getToken = typeof options.getToken === 'function'
-            ? options.getToken
-            : () => options.token || null;
-
         // Estado interno
         this.paginationMeta       = {};
         this.originalData         = [];
@@ -69,6 +52,8 @@ export class Grid {
         this.currentPage          = 1;
         this.searchDebounceTimer  = null;
         this.elements             = {};
+
+        this.lazy = options.lazy || false;
 
         this._init();
     }
@@ -79,7 +64,9 @@ export class Grid {
 
     async _init() {
         this._buildDOM();
-        await this.fetchAndUpdateView();
+        if (!this.lazy) {
+            await this.fetchAndUpdateView();
+        }
     }
 
     _buildDOM() {
@@ -98,32 +85,21 @@ export class Grid {
 
     async _fetchData() {
         try {
-            const finalUrl = new URL(this.url, window.location.origin);
-
+            // Parámetros de query para server-side
+            const params = {};
             if (this.serverSide) {
-                finalUrl.searchParams.append('page',  this.currentPage.toString());
-                finalUrl.searchParams.append('limit', this.rowsPerPage.toString());
+                params.page  = this.currentPage;
+                params.limit = this.rowsPerPage;
 
                 const searchQuery = this.elements.searchInput?.value;
                 if (this.searching && searchQuery) {
-                    finalUrl.searchParams.append('search', searchQuery);
+                    params.search = searchQuery;
                 }
             }
 
-            // Cabeceras
-            const headers = { 'Content-Type': 'application/json' };
-            const token = this._getToken();
-            if (token) headers['Authorization'] = `Bearer ${token}`;
-
-            const response = await fetch(finalUrl.toString(), { headers });
-
-            if (!response.ok) {
-                const body = await response.json().catch(() => ({}));
-                const msg  = body?.message || `HTTP ${response.status}: ${response.statusText}`;
-                throw new GridHttpError(msg, response.status);
-            }
-
-            const json = await response.json();
+            // Axios usa withCredentials y el CSRF token automáticamente
+            // gracias a la configuración de bootstrap.js
+            const { data: json } = await window.axios.get(this.url, { params });
 
             if (this.serverSide) {
                 // En server-side el dataPath apunta al objeto raíz { items, meta }
@@ -144,118 +120,70 @@ export class Grid {
             }
 
         } catch (error) {
-            this._handleError(error);
+            // Los errores HTTP los maneja el interceptor de axios en bootstrap.js
+            // Solo cerramos el loader y mostramos la tabla vacía
+            this._closeLoader();
             this._renderEmptyTable('ERROR AL CARGAR LOS DATOS');
             return null;
         }
     }
 
-    // ─────────────────────────────────────────────
-    //  Manejo de errores (reemplaza mensajeError + Swal)
-    // ─────────────────────────────────────────────
+    _renderSkeleton() {
+        if (!this.elements.tbody) return;
 
-    _handleError(error) {
-        this._closeLoader();
-
-        let title = '';
-
-        if (error instanceof GridHttpError) {
-            title = error.message;
-        } else if (error instanceof Error) {
-            title = error.message || 'Error desconocido';
+        // Si ya tenemos columnas definidas, pintamos la cabecera
+        if (this.columns.length > 0) {
+            this._updateTableHeaders(true);
         }
 
-        this._showError('Error en Grid', title || 'Ha ocurrido un error inesperado');
-    }
-
-    /**
-     * Muestra un overlay de carga nativo.
-     * Puede sobreescribirse asignando Grid.prototype._showLoader = fn.
-     */
-    _showLoader() {
-        if (this._loaderEl) return;
-
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
-            position: fixed; inset: 0; z-index: 9999;
-            background: rgba(0,0,0,.35);
-            display: flex; align-items: center; justify-content: center;
-        `;
-
-        const box = document.createElement('div');
-        box.style.cssText = `
-            background: #fff; border-radius: 12px;
-            padding: 28px 40px; text-align: center;
-            font-family: sans-serif; font-size: 14px; color: #333;
-            box-shadow: 0 4px 24px rgba(0,0,0,.2);
-        `;
-        box.innerHTML = `
-            <div style="
-                width:36px; height:36px; margin:0 auto 14px;
-                border:4px solid #e0e0e0;
-                border-top-color:#555;
-                border-radius:50%;
-                animation: grid-spin .7s linear infinite;
-            "></div>
-            <span>Cargando...</span>
-            <style>
-                @keyframes grid-spin { to { transform: rotate(360deg); } }
-            </style>
-        `;
-
-        overlay.appendChild(box);
-        document.body.appendChild(overlay);
-        this._loaderEl = overlay;
-    }
-
-    _closeLoader() {
-        if (this._loaderEl) {
-            this._loaderEl.remove();
-            this._loaderEl = null;
+        const fragment = document.createDocumentFragment();
+        
+        // Si no hay columnas (porque vienen en la data), asumimos 4 como default para el skeleton
+        const colCount = this.columns.length > 0 ? this.columns.length : 4;
+        
+        // Pintamos tantas filas de skeleton como rowsPerPage tengamos configuradas
+        for (let i = 0; i < this.rowsPerPage; i++) {
+            const tr = document.createElement('tr');
+            
+            for (let j = 0; j < colCount; j++) {
+                const td = tr.insertCell();
+                td.style.padding = this.padding;
+                
+                // Si la columna es explícitamente de "acciones", hacemos un skeleton redondo/pequeño
+                const isActionCol = this.columns[j] && this.columns[j].key === 'actions';
+                
+                const skeleton = document.createElement('div');
+                if (isActionCol) {
+                    skeleton.className = 'skeleton h-8 w-8 rounded-full mx-auto';
+                } else {
+                    // Variamos el ancho (w-full, w-3/4, w-5/6) para darle un toque más orgánico
+                    const widths = ['w-full', 'w-3/4', 'w-5/6', 'w-11/12'];
+                    const randomWidth = widths[Math.floor(Math.random() * widths.length)];
+                    skeleton.className = `skeleton h-4 ${randomWidth} opacity-50`;
+                }
+                
+                td.appendChild(skeleton);
+            }
+            fragment.appendChild(tr);
         }
-    }
 
-    /**
-     * Muestra un diálogo de error nativo.
-     * Puede sobreescribirse asignando Grid.prototype._showError = fn.
-     */
-    _showError(title, message) {
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
-            position: fixed; inset: 0; z-index: 10000;
-            background: rgba(0,0,0,.4);
-            display: flex; align-items: center; justify-content: center;
-        `;
+        this.elements.tbody.innerHTML = '';
+        this.elements.tbody.appendChild(fragment);
 
-        const box = document.createElement('div');
-        box.style.cssText = `
-            background: #fff; border-radius: 12px;
-            padding: 28px 36px; max-width: 360px; width: 90%;
-            font-family: sans-serif; text-align: center;
-            box-shadow: 0 4px 24px rgba(0,0,0,.2);
-        `;
-        box.innerHTML = `
-            <div style="font-size:40px; margin-bottom:10px;">⚠️</div>
-            <h3 style="margin:0 0 8px; color:#c0392b; font-size:16px;">${title}</h3>
-            <p style="margin:0 0 20px; color:#555; font-size:13px;">${message}</p>
-            <button style="
-                background:#c0392b; color:#fff; border:none;
-                padding:8px 24px; border-radius:6px; cursor:pointer; font-size:13px;
-            ">Aceptar</button>
-        `;
-
-        overlay.appendChild(box);
-        document.body.appendChild(overlay);
-        box.querySelector('button').onclick = () => overlay.remove();
+        // Ocultamos la paginación mientras carga
+        if (this.elements.paginationWrapper) this.elements.paginationWrapper.style.display = 'none';
+        if (this.elements.showInfo) this.elements.showInfo.style.display = 'none';
     }
 
     // ─────────────────────────────────────────────
     //  API pública
     // ─────────────────────────────────────────────
 
-    async fetchAndUpdateView() {
-        this._showLoader();
+     async fetchAndUpdateView() {
+        // 1. Mostrar Skeleton en lugar de loader global
+        this._renderSkeleton();
 
+        // 2. Traer datos
         const data = await this._fetchData();
 
         if (data === null) return;
@@ -271,8 +199,8 @@ export class Grid {
             this._buildTable();
         }
 
+        // 3. Renderizar vista real (reemplaza los skeletons)
         this._updateView();
-        this._closeLoader();
     }
 
     async recargarDatos() {
@@ -342,13 +270,16 @@ export class Grid {
             });
 
             input.addEventListener('input', () => {
-                if (this.searchDebounceTimer) clearTimeout(this.searchDebounceTimer);
-                this.searchDebounceTimer = window.setTimeout(() => {
-                    this.currentPage = 1;
-                    this.serverSide
-                        ? this.fetchAndUpdateView()
-                        : (this._applyClientSideFilter(), this._updateView());
-                }, 300);
+                this.currentPage = 1;
+                if (this.serverSide) {
+                    if (this.searchDebounceTimer) clearTimeout(this.searchDebounceTimer);
+                    this.searchDebounceTimer = window.setTimeout(() => {
+                        this.fetchAndUpdateView();
+                    }, 300);
+                } else {
+                    this._applyClientSideFilter();
+                    this._updateView();
+                }
             });
 
             searchContainer.append(searchIcon, clearBtn, input);
@@ -699,13 +630,18 @@ export class Grid {
         const btn = document.createElement('button');
 
         btn.innerHTML = `
-            <span class="material-symbols-rounded"
+            <span class="material-symbols-rounded icon-filled"
                   style="color:${color || 'inherit'}; vertical-align:middle; font-size:18px;">
                 ${icon}
             </span>
         `;
         btn.title = title;
         btn.classList.add('grid-button');
+
+        // Tooltip DaisyUI automático desde title
+        btn.classList.add('tooltip');
+        btn.setAttribute('data-tip', title);
+
         btn.style.display    = 'grid';
         btn.style.placeItems = 'center';
         btn.style.height     = '30px';
@@ -713,21 +649,33 @@ export class Grid {
         if (onClick) btn.onclick = onClick;
 
         for (const [key, value] of Object.entries(attributes)) {
-            btn.setAttribute(key, value);
+            if (key === 'class') {
+                btn.classList.add(...value.split(' '));
+            } else {
+                btn.setAttribute(key, value);
+            }
         }
 
         return btn;
     }
-}
 
-// ─────────────────────────────────────────────
-//  Error personalizado para respuestas HTTP
-// ─────────────────────────────────────────────
+    clone(container, overrides = {}) {
+        const config = {
+            columns:           this.columns,
+            rowsPerPage:       this.rowsPerPage,
+            dataPath:          this.dataPath,
+            serverSide:        this.serverSide,
+            padding:           this.padding,
+            searchPlaceholder: this.searchPlaceholder,
+            alignCells:        this.alignCells,
+            marginBottom:      this.marginBottom,
+            searching:         this.searching,
+            pagination:        this.pagination,
+            headerButton:      this.headerButton,
+            lazy: true,
+            ...overrides        // ← sobreescribe lo que se indique
+        };
 
-class GridHttpError extends Error {
-    constructor(message, status) {
-        super(message);
-        this.name   = 'GridHttpError';
-        this.status = status;
+        return new Grid(container, overrides.url ?? this.url, config);
     }
 }

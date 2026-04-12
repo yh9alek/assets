@@ -217,10 +217,18 @@ export class FormValidator {
         switch (field.type) {
 
             // ── Custom Select ──────────────────────────────────────────────
+            // No se lee native.value porque _renderOptions solo carga el lote
+            // visible (paginación), por lo que el item seleccionado puede no
+            // tener su <option> en el nativo en ese momento.
+            // Se consulta la instancia del Select directamente.
             case 'custom-select': {
-                const native = field.native;
-                if (!native) break;
-                if (native.required && !native.value) errors.push(msg.required);
+                const native   = field.native;
+                const instance = this._getSelectInstance(field.wrapper);
+                const required = native?.required ?? false;
+                if (!required) break;
+                // getValue() lee _selected internamente, independiente del DOM nativo
+                const value = instance ? instance.getValue() : native?.value;
+                if (!value) errors.push(msg.required);
                 break;
             }
 

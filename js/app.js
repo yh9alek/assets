@@ -5,23 +5,15 @@ import { Grid } from './grid.js';
 import { Select } from './select.js';
 import { FormValidator } from './form-validator.js';
 
+import './utils.js';
+import './sweet-alert2.js';
+
 window.Alpine = Alpine;
 Alpine.start();
 
 window.Grid = Grid;
 window.Select = Select;
 window.FormValidator = FormValidator;
-
-// Cargar último módulo consultado
-const saved = localStorage.getItem('sidebar_active_module');
-
-if (saved && saved !== 'home') {
-    const currentPath = window.location.pathname.replace(/^\//, '') || 'inicio';
-
-    if (window.location.pathname !== '/login' && currentPath !== saved) {
-        window.location.href = '/' + saved;
-    }
-}
 
 // Estado del tema actual
 document.addEventListener('DOMContentLoaded', () => {

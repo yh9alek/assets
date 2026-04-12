@@ -1,6 +1,8 @@
 @import './grid.css';
 @import './select.css';
 
+@import './sweetalert2.css';
+
 @import 'tailwindcss';
 @import  'material-symbols' ;
 
@@ -8,6 +10,7 @@
 @source '../../../storage/framework/views/*.php';
 @source '../../**/*.blade.php';
 @source '../../**/*.js';
+@source '../js/**/*.js';
 
 @plugin "daisyui" {
   themes:
@@ -130,6 +133,7 @@
     Figtree, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
+  /* CUSTOM BREAKPOINTS */
   --breakpoint-430: 430px;
 }
 
@@ -175,12 +179,12 @@
   }
 
   [data-theme="tailwind-dark"] .input:not(:focus) {
-    border-color: #27272A !important;
+    border-color: #27272A;
   }
 }
 
 @layer utilities {
-  .btn,
+  main .btn,
   input {
     max-height: 34.5px;
   }

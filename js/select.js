@@ -47,7 +47,7 @@ export class Select {
      * @param {boolean}  [config.serverSide]           — Búsqueda delegada al servidor
      * @param {number}   [config.limit]                — Límite de resultados en modo serverSide
      * @param {Function} [config.onChange]             — Callback (selectedItem | null, instance) => void
-     * @param {Function} [config.fetchFn]              — Función async (url) => any (reemplaza fetch interno)
+     * @param {Function} [config.fetchFn]              — Función async (url, params) => any (reemplaza axios interno)
      */
     constructor(container, config = {}) {
         const el =
@@ -68,7 +68,10 @@ export class Select {
         this._serverSide           = !!config.serverSide;
         this._limit                = config.limit ?? 15;
         this._onChange             = config.onChange ?? null;
-        this._fetchFn              = config.fetchFn ?? null;
+
+        // Autoselección inicial: se lee del atributo data-key del contenedor
+        // Ejemplo Blade: <div id="select-modulos" data-key="{{ $moduloDependienteULID }}"></div>
+        this._initialKey = el.dataset.key ?? config.initialKey ?? null;
 
         // Estado
         /** @type {{label: string, value: string, original: any}[]} */
@@ -506,17 +509,18 @@ export class Select {
         if (this._isLoading) return;
         this._isLoading = true;
 
-        // ── Construir URL final (con parámetros server-side) ──
-        const finalUrl = new URL(url, window.location.origin);
+        // ── Construir parámetros server-side ──
+        const params = {};
 
         if (this._serverSide) {
             const term = this._searchInp?.value.trim() ?? '';
-            finalUrl.searchParams.set('page',  this._currentPage);
-            finalUrl.searchParams.set('limit', this._limit);
-            if (term) finalUrl.searchParams.set('search', term);
+            params.page  = this._currentPage;
+            params.limit = this._limit;
+            if (term) params.search = term;
         }
 
-        const cacheKey = finalUrl.toString();
+        // La clave de caché se construye a partir de la URL base + parámetros serializados
+        const cacheKey = url + (Object.keys(params).length ? '?' + new URLSearchParams(params).toString() : '');
 
         // ── BLOQUE 1: Caché ──
         if (this._serverSide && this._fetchCache.has(cacheKey)) {
@@ -541,6 +545,7 @@ export class Select {
                 }
                 this._filteredData = [...this._items];
                 this._renderOptions();
+                this._applyInitialKey();
             }
             return;
         }
@@ -555,13 +560,12 @@ export class Select {
             // ── Petición ──
             let data;
             if (typeof this._fetchFn === 'function') {
-                data = await this._fetchFn(finalUrl.toString());
+                // fetchFn recibe (url, params) para que el caller pueda construir
+                // su propia petición si lo necesita (ej: autenticación especial)
+                data = await this._fetchFn(url, params);
             } else {
-                const res = await fetch(finalUrl.toString(), {
-                    headers: { 'Accept': 'application/json' },
-                });
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                data = await res.json();
+                const { data: responseData } = await window.axios.get(url, { params });
+                data = responseData;
             }
 
             // ── Extracción ──
@@ -605,6 +609,7 @@ export class Select {
                 }
                 this._filteredData = [...this._items];
                 this._renderOptions();
+                this._applyInitialKey();
             }
         } catch (err) {
             console.error('[Select] fetchItems error:', err);
@@ -671,12 +676,33 @@ export class Select {
 
     /** Devuelve el value actual o null */
     getValue() {
-        return this._nativeSelect.value || null;
+        return this._selected?.value ?? null;
     }
 
     /** Devuelve el ítem seleccionado completo o null */
     getSelected() {
         return this._selected;
+    }
+
+    /**
+     * Si existe un `_initialKey` pendiente de aplicar, busca el ítem con ese
+     * value y lo selecciona. Se ejecuta una sola vez: tras la primera carga
+     * exitosa de items (fetch o setItems). El key se puede proveer de dos formas:
+     *
+     *   1. Atributo HTML en el contenedor:
+     *      <div id="select-modulos" data-key="{{ $moduloDependienteULID }}"></div>
+     *
+     *   2. Opción de configuración al instanciar:
+     *      new Select('#select-modulos', { url: '...', initialKey: ulid })
+     */
+    _applyInitialKey() {
+        if (!this._initialKey) return;
+        const key = String(this._initialKey);
+        const idx = this._items.findIndex(i => String(i.value) === key);
+        if (idx !== -1) {
+            this._initialKey = null; // consumir: no repetir en búsquedas posteriores
+            this.select(idx);
+        }
     }
 
     /** Selecciona un ítem por su value */
@@ -698,6 +724,7 @@ export class Select {
         this._filteredData   = [...this._items];
         this._showingMessage = false;
         this._renderOptions();
+        this._applyInitialKey();
     }
 
     /** Resetea la selección (compatible con form.reset) */
