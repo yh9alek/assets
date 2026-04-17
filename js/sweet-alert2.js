@@ -1,9 +1,18 @@
 import Swal from "sweetalert2";
 
+export function getSwalTarget() {
+    const modalesAbiertos = document.querySelectorAll('dialog[open]');
+    if (modalesAbiertos.length > 0) {
+        return modalesAbiertos[modalesAbiertos.length - 1];
+    }
+    return 'body';
+}
+
 const base = Swal.mixin({
     buttonsStyling: true,
     allowOutsideClick: false,
     scrollbarPadding: false,
+    heightAuto: false,
 });
 
 const toast = Swal.mixin({
@@ -19,6 +28,7 @@ window.mostrarLoader = () => {
     Swal.fire({
         title: 'Cargando...',
         allowOutsideClick: false,
+        target: getSwalTarget(),
         didOpen: () => {
             Swal.showLoading();
         }
@@ -47,6 +57,7 @@ window.mostrarConfirmacion = async function confirm(title, text = '', opts = {})
         showCancelButton: true,
         cancelButtonText: 'Cancelar',
         confirmButtonText: 'SI',
+        target: getSwalTarget(),
         ...opts,
     });
     return result.isConfirmed;
@@ -71,8 +82,9 @@ window.mostrarPrompt = async function prompt(title, placeholder = '', opts = {})
         showCancelButton: true,
         confirmButtonText: 'Aceptar',
         cancelButtonText: 'Cancelar',
+        target: getSwalTarget(),
         inputValidator: (value) => {
-        if (!value?.trim()) return 'Este campo es obligatorio.';
+            if (!value?.trim()) return 'Este campo es obligatorio.';
         },
         ...opts,
     });
@@ -94,6 +106,7 @@ function formatTime(iso) {
 
 window.mostrarInfo = function(row) {
   Swal.fire({
+    target: getSwalTarget(),
     html: `
       <div style="padding: 20px 0 4px; font-family: Figtree, ui-sans-serif, system-ui, sans-serif;">
 

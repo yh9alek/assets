@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { getSwalTarget } from './sweet-alert2';
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -20,6 +21,8 @@ window.axios.interceptors.response.use(
                 title: 'Se actualizó correctamente',
                 timer: 2000,
                 showConfirmButton: true,
+                heightAuto: false,
+                target: getSwalTarget()
             });
         }
 
@@ -29,6 +32,8 @@ window.axios.interceptors.response.use(
                 title: 'Se registró correctamente',
                 timer: 2000,
                 showConfirmButton: true,
+                heightAuto: false,
+                target: getSwalTarget()
             });
         }
 
@@ -38,6 +43,8 @@ window.axios.interceptors.response.use(
                 title: 'Se eliminó correctamente',
                 timer: 2000,
                 showConfirmButton: true,
+                heightAuto: false,
+                target: getSwalTarget()
             });
         }
 
@@ -51,6 +58,8 @@ window.axios.interceptors.response.use(
                 text: 'No se pudo conectar con el servidor. Verifica tu conexión.',
                 showConfirmButton: true,
                 allowOutsideClick: false,
+                heightAuto: false,
+                target: getSwalTarget()
             });
             return Promise.reject(error);
         }
@@ -68,7 +77,8 @@ window.axios.interceptors.response.use(
             },
             403: {
                 icon: 'error',
-                title: 'Acceso prohibido',
+                title: 'Operación no permitida',
+                text: 'No esta autorizado para realizar esta acción',
             },
             404: {
                 icon: 'warning',
@@ -97,7 +107,9 @@ window.axios.interceptors.response.use(
             Swal.fire({
                 showConfirmButton: true,
                 allowOutsideClick: false,
+                heightAuto: false,
                 ...alertConfig,
+                target: getSwalTarget()
             });
         }
 

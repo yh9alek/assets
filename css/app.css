@@ -12,6 +12,7 @@
 @source '../../**/*.js';
 @source '../js/**/*.js';
 
+
 @plugin "daisyui" {
   themes:
     tailwind --default,
@@ -152,6 +153,20 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
+  }
+
+  body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+  }
+
+  /* Solo te aseguras que tu contenedor principal de contenido sí tenga scroll */
+  .contenedor-principal-de-tu-app {
+      overflow-y: auto;
+      height: 100%;
   }
 
   .search-container input:focus,

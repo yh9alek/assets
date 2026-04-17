@@ -94,6 +94,11 @@
 /* ──────────────────────────────────────────────
    POPUP — Contenedor principal
    ────────────────────────────────────────────── */
+
+dialog .swal2-container {
+    overflow-y: hidden !important;
+}
+  
 .swal2-popup {
   background-color: var(--swal-bg) !important;
   color: var(--swal-text) !important;

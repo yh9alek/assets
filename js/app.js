@@ -1,4 +1,5 @@
 import './bootstrap';
+import $ from 'jquery';
 
 import Alpine from 'alpinejs';
 import { Grid } from './grid.js';
@@ -7,6 +8,8 @@ import { FormValidator } from './form-validator.js';
 
 import './utils.js';
 import './sweet-alert2.js';
+
+window.$ = window.jQuery = $;
 
 window.Alpine = Alpine;
 Alpine.start();
