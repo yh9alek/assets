@@ -35,7 +35,7 @@ export class Grid {
         // dataPath: ruta al objeto raíz de la respuesta JSON
         // serverSide: apunta al objeto { items, meta } — ej: '' (raíz) o 'data'
         // clientSide: apunta al array — ej: 'items' o 'data.users'
-        this.dataPath = 'dataPath' in options ? options.dataPath : '';
+        this.dataPath = 'dataPath' in options ? options.dataPath : 'data';
         this.serverSide      = options.serverSide     || false;
         this.padding         = options.padding        || '6px';
         this.searchPlaceholder = options.searchPlaceholder || 'Buscar...';
@@ -122,8 +122,8 @@ export class Grid {
         } catch (error) {
             // Los errores HTTP los maneja el interceptor de axios en bootstrap.js
             // Solo cerramos el loader y mostramos la tabla vacía
-            this._closeLoader();
             this._renderEmptyTable('ERROR AL CARGAR LOS DATOS');
+            console.error(error);
             return null;
         }
     }
