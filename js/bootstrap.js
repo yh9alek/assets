@@ -18,7 +18,7 @@ window.axios.interceptors.response.use(
         if (status === 200 && ['PUT', 'PATCH'].includes(method)) {
             Swal.fire({
                 icon: 'success',
-                title: 'Se actualizó correctamente',
+                title: 'Se actualizó el registro correctamente',
                 timer: 2000,
                 showConfirmButton: true,
                 heightAuto: false,
@@ -40,7 +40,7 @@ window.axios.interceptors.response.use(
         if (status === 204) {
             Swal.fire({
                 icon: 'success',
-                title: 'Se eliminó correctamente',
+                title: 'Se eliminó el registro correctamente',
                 timer: 2000,
                 showConfirmButton: true,
                 heightAuto: false,
