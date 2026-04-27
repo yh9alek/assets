@@ -234,7 +234,7 @@
 
 /* ── Responsive ───────────────────────────────────────────────── */
 
-@media (width <= 560px) {
+@media (width <= 551px) {
   .registros {
     width: 100%;
     bottom: -64px !important;
@@ -261,9 +261,13 @@
   .grid-t th,
   .grid-t td,
   .grid-t .alert {
-    font-size: 11px;
+    font-size: 12px;
   }
   .grid-t .alert {
     padding: 5px 12px;
+  }
+
+  .btn-clear, .btn-search {
+    top: 11px !important;
   }
 }

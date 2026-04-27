@@ -246,7 +246,7 @@ export class Grid {
                 position: 'relative', display: 'flex', alignItems: 'center',
             });
 
-            const searchIcon = this._createEl('span', 'material-symbols-rounded', {
+            const searchIcon = this._createEl('span', 'btn-search material-symbols-rounded', {
                 position: 'absolute', left: '10px', top: '7px',
                 fontSize: '20px', color: '#888', pointerEvents: 'none',
             });

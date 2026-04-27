@@ -74,6 +74,9 @@ window.axios.interceptors.response.use(
             401: {
                 icon: 'warning',
                 title: 'Sin autorización',
+                text: 'Inicie sesión nuevamente',
+                timer: 3000,
+                willClose: () => window.location.reload()
             },
             403: {
                 icon: 'error',
@@ -88,6 +91,13 @@ window.axios.interceptors.response.use(
                 icon: 'warning',
                 title: 'Método no permitido',
                 text: 'Favor de comunicar a soporte.',
+            },
+            419: {
+                icon: 'warning',
+                title: 'Sesión expirada',
+                text: 'Debe iniciar sesión nuevamente.',
+                timer: 3000,
+                willClose: () => window.location.reload()
             },
             422: {
                 icon: 'warning',

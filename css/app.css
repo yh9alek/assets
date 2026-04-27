@@ -135,7 +135,8 @@
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
   /* CUSTOM BREAKPOINTS */
-  --breakpoint-430: 430px;
+  --breakpoint-2xs: 430px;
+  --breakpoint-xs: 551px;
 }
 
 /*
@@ -202,6 +203,24 @@
   main .btn,
   input {
     max-height: 34.5px;
+  }
+
+  @media(width <= 550px) {
+      button.select-trigger, .btn, input {
+        padding-block: 20px !important;
+      }
+
+      .breadcrumbs, summary, summary + ul a, menu > li:first-of-type > a {
+        padding-block: 10px !important;
+      }
+
+      fieldset {
+        margin-bottom: 10px;
+      }
+
+      fieldset > p[data-fv-error] {
+        top: 56px;
+      }
   }
 }
 

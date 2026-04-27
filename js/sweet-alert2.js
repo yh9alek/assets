@@ -120,13 +120,13 @@ window.mostrarInfo = function(row) {
         </div>
 
         <p style="font-size:13px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--swal-body-color);margin:0 0 10px;">Registro</p>
-        <div style="margin-bottom:14px;" class="pl-7 grid grid-cols-1 430:grid-cols-2">
+        <div style="margin-bottom:14px;" class="pl-7 grid grid-cols-1 2xs:grid-cols-2">
           ${fieldCard('person_add', 'Usuario alta', row.usuario_alta ?? '', null, 'create')}
           ${fieldCard('calendar_add_on', 'Fecha de creación', formatDate(row.created_at), formatTime(row.created_at), 'create')}
         </div>
 
         <p style="font-size:13px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--swal-body-color);margin:0 0 10px;">Última modificación</p>
-        <div class="pl-7 grid grid-cols-1 430:grid-cols-2">
+        <div class="pl-7 grid grid-cols-1 2xs:grid-cols-2">
           ${fieldCard('manage_accounts', 'Usuario modificación', row.usuario_mod ?? '', null, 'mod')}
           ${fieldCard('event_available', 'Fecha modificación', formatDate(row.updated_at), formatTime(row.updated_at), 'mod')}
         </div>

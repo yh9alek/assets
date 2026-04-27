@@ -417,7 +417,10 @@ export class FormValidator {
 
         // ── Reutilizar mensaje previo del validador ──
         let p = container.querySelector('[data-fv-error]');
-        if (p) { p.textContent = message; return; }
+        if (p) { 
+            p.textContent = message; 
+            return;
+        }
 
         // ── Reutilizar el <p class="label"> del componente blade ──
         // El componente text.blade.php posiciona el hint/error en absolute.
